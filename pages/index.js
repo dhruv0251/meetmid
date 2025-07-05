@@ -79,7 +79,7 @@ const handleSubmit = async () => {
     height={300}
   />
   <div style={styles.descriptionBox}>
-  <h2 style={styles.title}> "Where Should We Meet?" Got Easier.</h2>
+  <h2 style={styles.title}> Where Should We Meet? Got Easier.</h2>
   <p style={styles.text}><strong>Two people. Two locations. One perfect spot.</strong></p>
   </div>
 
