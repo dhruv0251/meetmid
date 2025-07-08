@@ -2,27 +2,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import LocationInputBox from '../components/LocationInputBox';
 import { useRouter } from 'next/router'; // ⬅️ Add this with your imports
-import Image from 'next/image'; 
-
-// In your pages/index.js or wherever your main component is
-import { useEffect } from 'react';
-
-export default function HomePage() {
-  useEffect(() => {
-    // Paste the debugging code here
-    console.log('Environment check:', {
-      apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-      keyLength: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY?.length,
-      keyStart: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY?.substring(0, 10)
-    });
-  }, []);
-
-  return (
-    <div>
-      {/* Your existing JSX */}
-    </div>
-  );
-}
+import Image from 'next/image'; // ✅ Add this line
 
 const GoogleMapPicker = dynamic(() => import('../components/GoogleMapPicker'), { ssr: false });
 
