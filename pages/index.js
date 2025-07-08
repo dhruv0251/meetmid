@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import LocationInputBox from '../components/LocationInputBox';
 import { useRouter } from 'next/router'; // ⬅️ Add this with your imports
 import Image from 'next/image'; 
-import { useEffect } from 'react';
 
 // In your pages/index.js or wherever your main component is
 import { useEffect } from 'react';
