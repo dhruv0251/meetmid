@@ -66,6 +66,40 @@ export default function ResultsPage() {
   return (
     <div style={styles.container}>
       <h2 style={styles.heading}>📍 Best Places to Meet</h2>
+      
+      {data.aiEnabled && (
+        <div style={{ 
+          marginBottom: "1.5rem", 
+          padding: "1rem", 
+          backgroundColor: "#e8f4fd", 
+          border: "2px solid #007bff", 
+          borderRadius: "8px" 
+        }}>
+          <h3 style={{ margin: "0 0 0.5rem 0", color: "#007bff", fontSize: "1.1rem" }}>
+            🤖 AI-Powered Recommendations
+          </h3>
+          {data.nlpQuery && (
+            <div style={{ 
+              margin: "0 0 0.8rem 0", 
+              padding: "0.8rem", 
+              backgroundColor: "#fff3cd", 
+              border: "1px solid #ffeaa7", 
+              borderRadius: "8px" 
+            }}>
+              <p style={{ margin: "0 0 0.3rem 0", fontSize: "0.9rem", color: "#856404", fontWeight: "bold" }}>
+                💬 Your AI Search: "{data.nlpQuery}"
+              </p>
+              <p style={{ margin: 0, fontSize: "0.8rem", color: "#856404" }}>
+                Results are tailored to your specific request using AI intelligence.
+              </p>
+            </div>
+          )}
+          <p style={{ margin: 0, fontSize: "0.9rem", color: "#333" }}>
+            Our AI has analyzed your preferences and current context to suggest the best meeting spots. 
+            Recommendations are ranked by AI score, considering time of day, fairness, and quality.
+          </p>
+        </div>
+      )}
 
       <GoogleMap
         mapContainerStyle={containerStyle}
@@ -92,6 +126,38 @@ export default function ResultsPage() {
               Distance: {getDistance(location1, place.location).toString()} km from you,{" "}
               {getDistance(location2, place.location).toString()} km from friend
             </p>
+            
+            {place.distanceScore && (
+              <p style={{ marginTop: "0.5rem", fontSize: "0.9rem", color: "#666" }}>
+                ⚖️ Fairness Score: {place.distanceScore.distanceDifference.toFixed(1)}km difference
+                {(() => {
+                  const diff = place.distanceScore.distanceDifference;
+                  const avgDistance = (place.distanceScore.distanceFromUser1 + place.distanceScore.distanceFromUser2) / 2;
+                  const fairnessRatio = diff / avgDistance;
+                  
+                  if (fairnessRatio < 0.3) return " ✅ Very fair!";
+                  if (fairnessRatio < 0.6) return " ⚠️ Somewhat fair";
+                  return " ❌ Less fair";
+                })()}
+              </p>
+            )}
+
+            {place.aiEnhanced && place.aiScore > 0 && (
+              <div style={{ marginTop: "0.8rem", padding: "0.8rem", backgroundColor: "#f0f8ff", border: "2px solid #007bff", borderRadius: "8px" }}>
+                <p style={{ margin: 0, fontWeight: "bold", color: "#007bff", fontSize: "0.9rem" }}>
+                  🤖 AI Recommendation Score: {place.aiScore}
+                </p>
+                {place.aiReasons && place.aiReasons.length > 0 && (
+                  <div style={{ marginTop: "0.5rem" }}>
+                    {place.aiReasons.map((reason, index) => (
+                      <p key={index} style={{ margin: "0.2rem 0", fontSize: "0.8rem", color: "#333" }}>
+                        {reason}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
             <div style={styles.buttonGroup}>
   <button
